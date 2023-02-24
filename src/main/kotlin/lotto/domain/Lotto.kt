@@ -2,7 +2,8 @@ package lotto.domain
 
 import lotto.constant.LOTTO_SIZE
 
-class Lotto(val lottoNumbers: Set<LottoNumber>) {
+class Lotto private constructor(val lottoNumbers: Set<LottoNumber>) {
+    constructor(lottoNumbers: List<Int>) : this(lottoNumbers.map { LottoNumber.from(it) }.toSet())
 
     init {
         validateLottoSize()

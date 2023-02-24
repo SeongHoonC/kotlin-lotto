@@ -4,18 +4,17 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.util.*
 
 class LottoTest {
     @MethodSource("provideWrongAmountLottoNumbers")
     @ParameterizedTest
-    fun `로또는 LottoNumber 6개로 이루어진 리스트를 가지고있다`(lottoNumbers: Set<LottoNumber>) {
+    fun `로또는 LottoNumber 6개로 이루어진 리스트를 가지고있다`(lottoNumbers: List<Int>) {
         assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
     }
 
     @MethodSource("provideDuplicateLottoNumbers")
     @ParameterizedTest
-    fun `로또 숫자는 중복되면 안된다`(lottoNumbers: Set<LottoNumber>) {
+    fun `로또 숫자는 중복되면 안된다`(lottoNumbers: List<Int>) {
         assertThrows<IllegalArgumentException> { Lotto(lottoNumbers) }
     }
 
@@ -23,47 +22,23 @@ class LottoTest {
         @JvmStatic
         fun provideWrongAmountLottoNumbers() = listOf(
             Arguments.of(
-                setOf(
-                    LottoNumber.from(4),
-                    LottoNumber.from(3),
-                    LottoNumber.from(12),
-                ),
+                listOf(4, 3, 12),
             ),
             Arguments.of(
-                setOf(
-                    LottoNumber.from(4),
-                    LottoNumber.from(3),
-                    LottoNumber.from(12),
-                    LottoNumber.from(17),
-                    LottoNumber.from(21),
-                    LottoNumber.from(35),
-                    LottoNumber.from(41),
-                ),
+                listOf(4, 3, 12, 17, 21, 35, 41),
             ),
-            Arguments.of(setOf<LottoNumber>()),
+            Arguments.of(
+                listOf<Int>(),
+            ),
         )
 
         @JvmStatic
         fun provideDuplicateLottoNumbers() = listOf(
             Arguments.of(
-                setOf(
-                    LottoNumber.from(4),
-                    LottoNumber.from(3),
-                    LottoNumber.from(12),
-                    LottoNumber.from(11),
-                    LottoNumber.from(12),
-                    LottoNumber.from(13),
-                ),
+                listOf(4, 3, 12, 11, 12, 13),
             ),
             Arguments.of(
-                setOf(
-                    LottoNumber.from(4),
-                    LottoNumber.from(3),
-                    LottoNumber.from(12),
-                    LottoNumber.from(12),
-                    LottoNumber.from(35),
-                    LottoNumber.from(35),
-                ),
+                listOf(4, 3, 12, 12, 35, 35),
             ),
         )
     }
